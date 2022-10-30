@@ -27,6 +27,12 @@ namespace AcessaEducation.EscolasIntegration
             });
 
             await _currentPage.GoToAsync(_loginURI);
+            await _currentPage.WaitForSelectorAsync("#user");
+            await _currentPage.FocusAsync("#user");
+            await _currentPage.Keyboard.TypeAsync(ra);
+            await _currentPage.FocusAsync("#Password");
+            await _currentPage.Keyboard.TypeAsync(senha);
+
             #endregion
         }
     }
