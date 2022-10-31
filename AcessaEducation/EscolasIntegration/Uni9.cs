@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Reflection.Metadata;
 using System.Text;
@@ -12,7 +14,6 @@ namespace AcessaEducation.EscolasIntegration
 {
     public class Uni9
     {
-        private string _loginURI = "https://aluno.uninove.br/seu/CENTRAL/aluno/";
         private Page _currentPage;
         private Browser _browser;
         private string _ra;
@@ -20,9 +21,9 @@ namespace AcessaEducation.EscolasIntegration
         public async Task AcessaUni9()
         {
             Console.WriteLine("=============================== Digite seu Ra =====================================");
-            _ra = Console.ReadLine();
+            _ra = "2217105739";
             Console.WriteLine("============================== Digite Sua Senha ====================================");
-            _senha = Console.ReadLine();
+            _senha = "5Alc1cha@";
 
             #region Login
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
@@ -67,8 +68,22 @@ namespace AcessaEducation.EscolasIntegration
 
         public async Task GetSentralAluno()
         {
-            
+            #region Serviços Central do Aluno
+            Console.WriteLine("============================ Selecione o Serviço ====================================");
+            Console.WriteLine("=====================================================================================");
+            Console.WriteLine("1- Boletim de notas e faltas");
+            Console.WriteLine("=====================================================================================");
 
+            int servicesCentralAluno = int.Parse(Console.ReadLine());
+            Console.WriteLine("=====================================================================================");
+            switch (servicesCentralAluno)
+            {
+                case 1:
+                    await _currentPage.ClickAsync("button[title='Acessar Boletim']");
+                    await _currentPage.WaitForSelectorAsync("#idem_nota");
+                    break;
+            }
+            #endregion
         }
     }
 }
